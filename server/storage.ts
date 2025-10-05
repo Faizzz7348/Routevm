@@ -374,7 +374,7 @@ export class MemStorage implements IStorage {
         dataKey: "kilometer",
         type: "number",
         sortOrder: infoSortOrder + 1,
-        isEditable: "false",
+        isEditable: "true",
         options: [],
       };
       
@@ -771,7 +771,7 @@ export class DatabaseStorage implements IStorage {
             dataKey: "kilometer",
             type: "number",
             sortOrder: 10,
-            isEditable: "false",
+            isEditable: "true",
             options: [] as string[],
           },
           {
@@ -988,7 +988,7 @@ export class DatabaseStorage implements IStorage {
           dataKey: "kilometer",
           type: "number",
           sortOrder: infoSortOrder + 1,
-          isEditable: "false",
+          isEditable: "true",
           options: [],
         });
         
