@@ -39,7 +39,60 @@ Preferred communication style: Simple, everyday language.
 ## External Dependencies
 - **Database**: Neon Database (@neondatabase/serverless) for PostgreSQL hosting
 - **Image Gallery**: LightGallery for image viewing with zoom and thumbnail plugins
+- **Google Maps API**: Integration for toll price calculation using Routes API with vehicle-specific pricing
 - **Fonts**: Google Fonts integration (Inter, DM Sans, Fira Code, Geist Mono, Architects Daughter)
 - **Development**: Replit-specific plugins for runtime error handling and cartographer
 - **UI Library**: Comprehensive Radix UI components for accessibility
 - **Utilities**: Date-fns for date manipulation, clsx/class-variance-authority for styling
+
+## Recent Changes
+
+### October 2, 2025
+- **Per-User Layout Preferences**: Implemented browser-based user identification for individual layout settings
+  - Each user gets their own layout preferences (column visibility, order, creator name/URL)
+  - User identification uses localStorage with unique browser-based IDs
+  - Backend validates userId on all layout API requests using Zod schema validation
+  - Database schema updated with userId field and unique index for per-user records
+  - Frontend gracefully handles new users with no saved layouts (404 responses)
+  - Prevents cross-user data collisions with proper filtering and validation
+- **Default Table Sorting by Code**: Table now sorts by code column by default
+  - Rows are ordered numerically by code value (e.g., code 25 appears at position 25)
+  - "No" column displays sequential numbers (1, 2, 3...) without gaps, even when codes have gaps
+  - QL Kitchen row always stays at the top with infinity symbol (∞)
+- **Editable No Column for Sorting**: Made the "No" column editable in edit mode for manual sort order control
+  - Users can now click and edit the "No" value to set custom sort numbers
+  - Works with filters - users can filter routes and then manually adjust the sort order
+  - Table automatically resets to default sorting when filters are cleared
+  - QL Kitchen row remains protected with infinity symbol (∞) and cannot be edited
+  - Number input validation ensures only valid integers are accepted
+- **AI Generator Row (Totals) Calculation**: Enhanced to calculate based on currently visible filtered/searched data
+  - Totals row now dynamically calculates sums based on active filters and search results
+  - When all routes are shown, calculates across all routes
+  - When filters or search are applied, calculates only filtered/searched results
+  - Added support for tollPrice column calculations in addition to tngRoute
+  - Clear documentation in code explaining the filtered data calculation behavior
+- **Safari/iPad Compatibility**: Removed all backdrop-blur effects from table headers
+  - Table headers now use solid opaque backgrounds (white/dark slate) for reliable cross-browser rendering
+  - Resolves rendering issues with backdrop-filter CSS property on Safari/iPad
+- **Pagination Layout**: Fixed page number display to stay grouped with navigation buttons
+
+### October 1, 2025
+- **Multi-Page Carousel Feature**: Implemented sliding carousel for header content with left/right navigation
+  - Users can now create, edit, and delete multiple pages with unique titles and descriptions
+  - Carousel navigation with Previous/Next arrows (hidden when only one page exists)
+  - Smooth transitions and premium blue gradient styling maintained
+  - Automatic migration from old single title/description to page-based system
+  - Comprehensive error handling with user-friendly toast notifications
+  - Proper index management and bounds checking for edge cases
+  - Pages stored in database with sortOrder for deterministic ordering
+  - Add/Edit/Delete functionality accessible in edit mode with disabled states during operations
+
+### September 30, 2025
+- Enhanced Google Maps Routes API with lorry-optimized route calculation for both distance and toll prices
+- Implemented `TRAFFIC_AWARE_OPTIMAL` routing preference for shortest road routes avoiding detours
+- Added automatic distance (kilometer) calculation using lorry-specific vehicle parameters
+- Route calculation now avoids ferries and optimizes for highways suitable for lorries
+- Updated toll price calculation API to return both distance and toll data in single request
+- Table header styling improved with premium blue colors (blue-600/blue-400) and 11px font size
+- Added comprehensive mobile optimizations with responsive font sizes and touch-friendly interfaces
+- Vehicle specifications: diesel lorry, class 1 toll pricing, optimized for shortest practical routes
