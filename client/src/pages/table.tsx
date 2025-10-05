@@ -467,7 +467,7 @@ export default function TablePage() {
       return filteredRows.map((row) => {
         // QL Kitchen row always shows 0 distance (it's the starting point)
         if (row.location === "QL kitchen") {
-          return { ...row, kilometer: 0, segmentDistance: 0 };
+          return { ...row, kilometer: "0.00", segmentDistance: 0 };
         }
 
         // Check if current row coordinates are missing before parsing
@@ -486,7 +486,7 @@ export default function TablePage() {
         // Calculate direct distance from QL Kitchen to this route location
         const directDistance = calculateDistance(qlLat, qlLng, currentLat, currentLng);
 
-        return { ...row, kilometer: directDistance, segmentDistance: directDistance };
+        return { ...row, kilometer: directDistance.toFixed(2), segmentDistance: directDistance };
       });
     } else {
       // FILTERS ACTIVE: Calculate cumulative distance through the route sequence
@@ -500,7 +500,7 @@ export default function TablePage() {
           cumulativeDistance = 0;
           previousLat = qlLat;
           previousLng = qlLng;
-          return { ...row, kilometer: 0, segmentDistance: 0 };
+          return { ...row, kilometer: "0.00", segmentDistance: 0 };
         }
 
         // Check if current row coordinates are missing before parsing
@@ -524,7 +524,7 @@ export default function TablePage() {
         previousLat = currentLat;
         previousLng = currentLng;
 
-        return { ...row, kilometer: cumulativeDistance, segmentDistance };
+        return { ...row, kilometer: cumulativeDistance.toFixed(2), segmentDistance };
       });
     }
   }, [filteredRows, searchTerm, filterValue, tripFilterValue]);

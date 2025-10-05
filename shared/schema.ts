@@ -28,6 +28,7 @@ export const tableRows = pgTable("table_rows", {
   tngSite: text("tng_site").notNull().default(""),
   tngRoute: text("tng_route").notNull().default(""),
   destination: text("destination").notNull().default("0.00"),
+  kilometer: text("kilometer").notNull().default("0.00"),
   tollPrice: text("toll_price").notNull().default("0.00"),
   latitude: decimal("latitude", { precision: 10, scale: 8 }),
   longitude: decimal("longitude", { precision: 11, scale: 8 }),
