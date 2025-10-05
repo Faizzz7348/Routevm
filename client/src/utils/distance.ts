@@ -18,48 +18,50 @@ export function calculateDistance(
   return R * c;
 }
 
-// Calculate cumulative distances from QL Kitchen through the route
+// Calculate cumulative distances from the first valid row
 export function calculateCumulativeDistances(rows: any[]): Map<string, number> {
   const distances = new Map<string, number>();
-  
-  // Find QL Kitchen (warehouse) row
-  const qlKitchen = rows.find(row => row.route === "Warehouse" && row.sortOrder === -1);
-  
-  if (!qlKitchen || !qlKitchen.latitude || !qlKitchen.longitude) {
-    // If no QL Kitchen found, return empty distances
+
+  // Find the first row with valid coordinates as the starting point
+  const startRow = rows.find(row =>
+    row.latitude && row.longitude &&
+    !isNaN(parseFloat(row.latitude)) &&
+    !isNaN(parseFloat(row.longitude))
+  );
+
+  if (!startRow) {
+    console.warn("No valid starting row found with latitude and longitude.");
     return distances;
   }
 
-  // QL Kitchen has 0 distance
-  distances.set(qlKitchen.id, 0);
-
-  // Filter out QL Kitchen and sort remaining rows by their current order
-  const routeRows = rows
-    .filter(row => row.id !== qlKitchen.id)
-    .filter(row => row.latitude && row.longitude && 
-                   !isNaN(parseFloat(row.latitude)) && 
-                   !isNaN(parseFloat(row.longitude)));
+  distances.set(startRow.id, 0);
 
   let cumulativeDistance = 0;
-  let previousLat = parseFloat(qlKitchen.latitude);
-  let previousLon = parseFloat(qlKitchen.longitude);
+  let previousLat = parseFloat(startRow.latitude);
+  let previousLon = parseFloat(startRow.longitude);
+
+  // Filter out the start row and sort remaining rows by sortOrder if available
+  const routeRows = rows
+    .filter(row => row.id !== startRow.id)
+    .filter(row => row.latitude && row.longitude &&
+                   !isNaN(parseFloat(row.latitude)) &&
+                   !isNaN(parseFloat(row.longitude)))
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
   for (const row of routeRows) {
     const currentLat = parseFloat(row.latitude);
     const currentLon = parseFloat(row.longitude);
-    
-    // Calculate distance from previous point to current point
+
     const segmentDistance = calculateDistance(
       previousLat,
       previousLon,
       currentLat,
       currentLon
     );
-    
+
     cumulativeDistance += segmentDistance;
     distances.set(row.id, cumulativeDistance);
-    
-    // Update previous coordinates for next iteration
+
     previousLat = currentLat;
     previousLon = currentLon;
   }
