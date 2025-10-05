@@ -1,19 +1,26 @@
-// Haversine formula to calculate distance between two points in kilometers
-export function calculateDistance(
-  lat1: number,
-  lon1: number,
-  lat2: number,
-  lon2: number
-): number {
-  const R = 6371; // Earth's radius in kilometers
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLon = (lon2 - lon1) * (Math.PI / 180);
+import tablerows from '../data/tablerow.json';
+import tablecolumns from '../data/tablecolumn.json';
+
+/**
+ * Calculates the distance between two coordinates using the Haversine formula.
+ * @param lat1 Latitude of point 1
+ * @param lon1 Longitude of point 1
+ * @param lat2 Latitude of point 2
+ * @param lon2 Longitude of point 2
+ * @returns Distance in kilometers
+ */
+export function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const toRad = (value: number) => value * Math.PI / 180;
+  const R = 6371; // Earth's radius in km
+
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * (Math.PI / 180)) *
-      Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
@@ -49,7 +56,7 @@ export function calculateCumulativeDistances(rows: any[]): Map<string, number> {
     const currentLon = parseFloat(row.longitude);
     
     // Calculate distance from previous point to current point
-    const segmentDistance = calculateDistance(
+    const segmentDistance = getDistanceKm(
       previousLat,
       previousLon,
       currentLat,
@@ -65,4 +72,17 @@ export function calculateCumulativeDistances(rows: any[]): Map<string, number> {
   }
 
   return distances;
+}
+
+// Example usage: calculate cumulative distances for your route rows
+const distances = calculateCumulativeDistances(tablerows);
+
+// Log the result (or use it in your app)
+console.log(distances);
+
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  }
 }
