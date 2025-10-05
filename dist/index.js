@@ -6,6 +6,7 @@ var __export = (target, all) => {
 
 // server/index.ts
 import express2 from "express";
+import dotenv2 from "dotenv";
 
 // server/routes.ts
 import { createServer } from "http";
@@ -117,9 +118,11 @@ var insertPageSchema = createInsertSchema(pages).omit({
 });
 
 // server/db.ts
+import dotenv from "dotenv";
 import { Pool, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-serverless";
 import ws from "ws";
+dotenv.config();
 neonConfig.webSocketConstructor = ws;
 if (!process.env.DATABASE_URL) {
   throw new Error(
@@ -1781,6 +1784,7 @@ function serveStatic(app2) {
 }
 
 // server/index.ts
+dotenv2.config();
 var app = express2();
 app.use(express2.json());
 app.use(express2.urlencoded({ extended: false }));
