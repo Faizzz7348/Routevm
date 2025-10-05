@@ -369,14 +369,20 @@ export function DataTable({
       case "kilometer":
         // Use the kilometer value already calculated by parent component
         const kmValue = (row as any).kilometer;
-        if (kmValue === "—" || kmValue === undefined || kmValue === null) {
+        if (kmValue === "—" || kmValue === undefined || kmValue === null || kmValue === "") {
           return "—";
         }
-        if (typeof kmValue === "number") {
-          if (kmValue === 0) {
+        // Parse the string value
+        const kmNum = parseFloat(kmValue);
+        if (!isNaN(kmNum)) {
+          if (kmNum === 0) {
             return "0.00 km";
           }
-          return `${kmValue.toFixed(2)} km`;
+          return `${kmNum.toFixed(2)} km`;
+        }
+        // If it's already formatted, return it as is
+        if (typeof kmValue === "string" && kmValue.includes("km")) {
+          return kmValue;
         }
         return "—";
       default:

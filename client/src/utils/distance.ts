@@ -1,4 +1,11 @@
-// Haversine formula to calculate distance between two points in kilometers
+/**
+ * Calculates the distance between two geographic coordinates using the Haversine formula
+ * @param lat1 Latitude of the first point in decimal degrees
+ * @param lon1 Longitude of the first point in decimal degrees
+ * @param lat2 Latitude of the second point in decimal degrees
+ * @param lon2 Longitude of the second point in decimal degrees
+ * @returns Distance between the two points in kilometers
+ */
 export function calculateDistance(
   lat1: number,
   lon1: number,
@@ -18,12 +25,16 @@ export function calculateDistance(
   return R * c;
 }
 
-// Calculate cumulative distances from QL Kitchen through the route
+/**
+ * Calculate cumulative distances from QL Kitchen through the route
+ * @param rows Array of table rows with latitude, longitude, and location properties
+ * @returns Map of row IDs to their cumulative distance in kilometers from QL Kitchen
+ */
 export function calculateCumulativeDistances(rows: any[]): Map<string, number> {
   const distances = new Map<string, number>();
   
-  // Find QL Kitchen (warehouse) row
-  const qlKitchen = rows.find(row => row.route === "Warehouse" && row.sortOrder === -1);
+  // Find QL Kitchen row (starting point)
+  const qlKitchen = rows.find(row => row.location === "QL kitchen" && row.sortOrder === -1);
   
   if (!qlKitchen || !qlKitchen.latitude || !qlKitchen.longitude) {
     // If no QL Kitchen found, return empty distances
@@ -38,7 +49,8 @@ export function calculateCumulativeDistances(rows: any[]): Map<string, number> {
     .filter(row => row.id !== qlKitchen.id)
     .filter(row => row.latitude && row.longitude && 
                    !isNaN(parseFloat(row.latitude)) && 
-                   !isNaN(parseFloat(row.longitude)));
+                   !isNaN(parseFloat(row.longitude)))
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
   let cumulativeDistance = 0;
   let previousLat = parseFloat(qlKitchen.latitude);
