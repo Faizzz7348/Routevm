@@ -1,0 +1,15 @@
+export const columns = [
+  {"id":"0ebb288e-8e46-454e-b2c1-f4ba530815b4","name":"Route","data_key":"route","type":"select","sort_order":1,"is_editable":true,"options":["KL 1","KL 2","KL 3","KL 4","KL 5","KL 6","KL 7","SL 1","SL 2","SL 3"]},
+  {"id":"10c33f48-eb87-49bb-9268-cefc8e3e260a","name":"Images","data_key":"images","type":"images","sort_order":8,"is_editable":false,"options":[]},
+  {"id":"2709f61a-3678-495e-a9cc-0ee38514536d","name":"Location","data_key":"location","type":"text","sort_order":3,"is_editable":true,"options":[]},
+  {"id":"2b7bf796-0da6-42d9-b246-4db53c22efdc","name":"Info","data_key":"info","type":"text","sort_order":7,"is_editable":true,"options":[]},
+  {"id":"2fc83e9d-798d-448e-8b6b-1d8ad81d69e7","name":"Kilometer","data_key":"kilometer","type":"number","sort_order":5,"is_editable":false,"options":[]},
+  {"id":"70fefb26-3364-46bb-8aa4-051be60c436d","name":"Trip","data_key":"trip","type":"select","sort_order":4,"is_editable":true,"options":["Daily","Weekday","Alt 1","Alt 2"]},
+  {"id":"81312a26-7a5e-497c-afff-b5ebb84897b7","name":"Longitude","data_key":"longitude","type":"text","sort_order":14,"is_editable":true,"options":[]},
+  {"id":"8ce435c2-9aeb-485c-b58a-2eedc7d33ff7","name":"Code","data_key":"code","type":"text","sort_order":2,"is_editable":true,"options":[]},
+  {"id":"a750d016-24a7-4e30-b7f4-304990075746","name":"ID","data_key":"id","type":"text","sort_order":0,"is_editable":false,"options":[]},
+  {"id":"b07e195e-6404-47fb-ad9f-fd3adf08c5d3","name":"Latitude","data_key":"latitude","type":"text","sort_order":13,"is_editable":true,"options":[]},
+  {"id":"fbb0704f-a4da-4a04-be22-f3ccfb80f0ef","name":"Toll Price","data_key":"tollPrice","type":"currency","sort_order":12,"is_editable":false,"options":[]},
+  {"id":"fd367b23-4c85-48ed-9436-01b4a8e79443","name":"Parking","data_key":"tngRoute","type":"currency","sort_order":6,"is_editable":true,"options":[]},
+  {"id":"ff12470e-9500-4e83-9a08-ac3ae606a127","name":"No","data_key":"no","type":"text","sort_order":0,"is_editable":false,"options":[]}
+];
