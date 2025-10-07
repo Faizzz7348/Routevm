@@ -3,7 +3,7 @@ export const columns = [
   {"id":"10c33f48-eb87-49bb-9268-cefc8e3e260a","name":"Images","data_key":"images","type":"images","sort_order":8,"is_editable":false,"options":[]},
   {"id":"2709f61a-3678-495e-a9cc-0ee38514536d","name":"Location","data_key":"location","type":"text","sort_order":3,"is_editable":true,"options":[]},
   {"id":"2b7bf796-0da6-42d9-b246-4db53c22efdc","name":"Info","data_key":"info","type":"text","sort_order":7,"is_editable":true,"options":[]},
-  {"id":"2fc83e9d-798d-448e-8b6b-1d8ad81d69e7","name":"Kilometer","data_key":"kilometer","type":"number","sort_order":5,"is_editable":false,"options":[]},
+  {"id":"2fc83e9d-798d-448e-8b6b-1d8ad81d69e7","name":"Kilometer","data_key":"kilometer","type":"number","sort_order":5,"is_editable":"true","options":[]},
   {"id":"70fefb26-3364-46bb-8aa4-051be60c436d","name":"Trip","data_key":"trip","type":"select","sort_order":4,"is_editable":true,"options":["Daily","Weekday","Alt 1","Alt 2"]},
   {"id":"81312a26-7a5e-497c-afff-b5ebb84897b7","name":"Longitude","data_key":"longitude","type":"text","sort_order":14,"is_editable":true,"options":[]},
   {"id":"8ce435c2-9aeb-485c-b58a-2eedc7d33ff7","name":"Code","data_key":"code","type":"text","sort_order":2,"is_editable":true,"options":[]},
