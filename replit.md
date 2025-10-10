@@ -26,9 +26,9 @@ Preferred communication style: Simple, everyday language.
 - **Development**: Hot reload with Vite integration in development mode
 
 ## Data Storage Solutions
-- **Current**: In-memory storage using JavaScript Maps for development
+- **Current**: PostgreSQL database (Replit-provisioned) with Drizzle ORM
 - **Schema**: Drizzle ORM with PostgreSQL schema definitions
-- **Database Config**: Configured for Neon Database (serverless PostgreSQL)
+- **Database Config**: Uses standard pg driver for Replit's PostgreSQL instance
 - **Migration**: Drizzle Kit for database migrations and schema management
 
 ## Authentication and Authorization
@@ -37,15 +37,28 @@ Preferred communication style: Simple, everyday language.
 - **Security**: CORS configuration and request logging middleware
 
 ## External Dependencies
-- **Database**: Neon Database (@neondatabase/serverless) for PostgreSQL hosting
+- **Database**: PostgreSQL with standard pg driver (Replit-provisioned instance)
 - **Image Gallery**: LightGallery for image viewing with zoom and thumbnail plugins
 - **Google Maps API**: Integration for toll price calculation using Routes API with vehicle-specific pricing
 - **Fonts**: Google Fonts integration (Inter, DM Sans, Fira Code, Geist Mono, Architects Daughter)
 - **Development**: Replit-specific plugins for runtime error handling and cartographer
+- **Vite Configuration**: Configured for Replit proxy with 0.0.0.0:5000 binding and WSS HMR
 - **UI Library**: Comprehensive Radix UI components for accessibility
 - **Utilities**: Date-fns for date manipulation, clsx/class-variance-authority for styling
 
 ## Recent Changes
+
+### October 8, 2025
+- **Replit Environment Setup**: Successfully configured GitHub import for Replit deployment
+  - Switched database driver from Neon websocket (@neondatabase/serverless) to standard pg driver for Replit PostgreSQL
+  - Configured Vite for Replit proxy compatibility (host: 0.0.0.0, port: 5000, HMR with wss/443)
+  - Fixed database initialization to use onConflictDoNothing() for idempotent QL Kitchen row insertion
+  - Prevented duplicate sortOrder constraint violations that caused startup crashes
+  - Updated .gitignore with proper Node.js patterns (dist, .env, logs, migrations)
+  - Fixed calculateDistance function export in distance.ts utility
+  - Configured deployment with autoscale target using npm build and start scripts
+  - Development workflow running successfully on port 5000
+  - Database schema successfully migrated using drizzle-kit push
 
 ### October 2, 2025
 - **Per-User Layout Preferences**: Implemented browser-based user identification for individual layout settings
