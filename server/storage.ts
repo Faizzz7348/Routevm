@@ -810,31 +810,25 @@ export class DatabaseStorage implements IStorage {
       );
 
       if (!qlKitchenExists) {
-        try {
-          // Add QL Kitchen row
-          await db.insert(tableRows).values({
-            no: 999,
-            route: "Warehouse",
-            code: "QL001",
-            location: "QL Kitchen",
-            trip: "Daily",
-            info: "Special QL Kitchen warehouse route",
-            tngSite: "QL Central",
-            tngRoute: "0.00",
-            destination: "0.00",
-            tollPrice: "0.00",
-            latitude: "3.139003",
-            longitude: "101.686855",
-            images: [],
-            qrCode: "",
-            sortOrder: -1,
-          });
-        } catch (error: any) {
-          // If constraint error for duplicate sort_order, ignore it as the row already exists
-          if (error.code !== '23505' || !error.detail?.includes('sort_order')) {
-            throw error;
-          }
-        }
+        // Add QL Kitchen row with onConflictDoNothing to handle idempotent initialization
+        // This prevents crashes when the row exists but has been edited
+        await db.insert(tableRows).values({
+          no: 999,
+          route: "Warehouse",
+          code: "QL001",
+          location: "QL Kitchen",
+          trip: "Daily",
+          info: "Special QL Kitchen warehouse route",
+          tngSite: "QL Central",
+          tngRoute: "0.00",
+          destination: "0.00",
+          tollPrice: "0.00",
+          latitude: "3.139003",
+          longitude: "101.686855",
+          images: [],
+          qrCode: "",
+          sortOrder: -1,
+        }).onConflictDoNothing();
       }
 
       if (existingRows.length === 0) {
